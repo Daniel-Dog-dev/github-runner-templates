@@ -1,0 +1,20 @@
+name: Deploy codebase to DirectAdmin
+
+on:
+  push:
+    branches: [ "dev*" ]
+    
+jobs:
+
+  deploy:
+  
+    runs-on: ['ubuntu-latest']
+    needs: [test]
+    if ${{ needs.test.result == 'success' }}
+        
+    steps:
+      - name: Telling DirectAdmin to update codebase
+        env:
+          DA_GIT_TRIGGER: ${{ secrets.DA_GIT_TRIGGER}}
+        run: |
+          wget $DA_GIT_TRIGGER
