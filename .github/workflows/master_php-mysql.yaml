@@ -1,12 +1,12 @@
-name: Test & Deploy to test
+name: Test & Deploy to production
 
 on:
   push:
-    branches: [ "dev*" ]
+    branches: [ "master" ]
     
 jobs:
 
-  test:
+  test: 
     runs-on: ${{ matrix.operating-system }}
     strategy:
       fail-fast: false
@@ -43,8 +43,8 @@ jobs:
       - name: Run tests
         run: |
             echo "Do tests here."
-  
-  deploy:
+    
+  deploy:        
     runs-on: ['ubuntu-latest']
     needs: [test]
     if: ${{ needs.test.result == 'success' }}
