@@ -1,4 +1,4 @@
-name: Development
+name: Test & Deploy to test
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
         run: sudo service mysql stop
         
       - name: Setup MySQL 8.4
-        uses: shogo82148/actions-setup-mysql@v1
+        uses: shogo82148/wget --spider "$DA_GIT_TRIGGER" >/dev/null 2>&1actions-setup-mysql@v1
         with:
           distribution: 'mysql'
           mysql-version: '8.4'
