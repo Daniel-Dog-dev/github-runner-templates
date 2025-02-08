@@ -1,0 +1,47 @@
+name: Development testing
+
+on:
+  push:
+    branches: [ "dev*" ]
+    
+jobs:
+
+  test:
+  
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: ['ubuntu-latest']
+        php-versions: ['8.4', '8.3']
+        
+    steps:
+      - name: Cloning GitHub repository
+        uses: actions/checkout@v3
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+        env:
+          fail-fast: true
+          update: true
+          
+      - name: Shutdown default MySQL
+        run: sudo service mysql stop
+        
+      - name: Setup MySQL 8.4
+        uses: shogo82148/actions-setup-mysql@v1
+        with:
+          distribution: 'mysql'
+          mysql-version: '8.4'
+          auto-start: true
+      
+      - name: Preparing actions runner for testing
+        run: |
+            echo "Do some DB prep stuff."
+      
+      - name: Run tests
+        run: |
+            echo "Do tests here."
+            
