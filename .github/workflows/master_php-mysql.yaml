@@ -54,4 +54,4 @@ jobs:
         env:
           DA_GIT_TRIGGER: ${{ secrets.DA_GIT_TRIGGER}}
         run: |
-          wget $DA_GIT_TRIGGER
+          wget -q --spider "$DA_GIT_TRIGGER" >/dev/null 2>&1
